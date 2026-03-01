@@ -1,109 +1,131 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Wrench } from 'lucide-react';
+import { Layers, Wrench, GitMerge, CheckCircle2, Mail, PhoneCall } from 'lucide-react';
 
-const Hero = () => {
-  // Advanced Scroll To Top with Timeout Fix
+const HomeSections = () => {
+  // Scroll To Top Function
   const scrollToTop = () => {
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }, 50); // 50ms ka micro-delay taaki pehle route change ho jaye
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
-  const containerVariants = {
+  const fadeUpVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
+
+  const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } 
-    },
+      transition: { staggerChildren: 0.2 }
+    }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden pt-24 px-6">
+    <div className="bg-[#050505] text-zinc-300 relative z-10">
       
-      {/* Pulsating Ambient Glow */}
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.15, 0.25, 0.15] 
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500 blur-[150px] rounded-full pointer-events-none" 
-      />
-
-      <motion.div 
-        className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center mt-12"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.h1 
-          variants={itemVariants}
-          className="text-6xl md:text-8xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-zinc-500 mb-8 leading-[1.05]"
+      {/* SECTION 1: THE WORK WE TAKE ON */}
+      <section className="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-900">
+        <motion.div 
+          initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}
+          variants={fadeUpVariant}
+          className="mb-16 max-w-3xl"
         >
-          We Fix What<br />
-          Others Could Not.
-        </motion.h1>
-
-        <motion.p 
-          variants={itemVariants}
-          className="text-zinc-300 text-lg md:text-xl font-medium max-w-3xl leading-relaxed mb-6"
-        >
-          Arktantra handles software problems that have been sitting too long — systems that do not perform, tools that do not connect, applications that were delivered but never quite worked right. We come in, look at the actual situation, and deal with it.
-        </motion.p>
-
-        <motion.p 
-          variants={itemVariants}
-          className="text-zinc-500 text-base md:text-lg max-w-2xl leading-relaxed mb-14"
-        >
-          No lengthy proposals before we understand the problem. No vague timelines. No disappearing after handover.
-        </motion.p>
+          <h2 className="text-xs font-bold tracking-[0.2em] text-zinc-600 uppercase mb-4">The Work We Take On</h2>
+          <p className="text-2xl md:text-3xl font-medium text-white leading-snug">
+            Arktantra operates across three broad areas of software work. Most client engagements fall into one of these — though the specifics of every project are different.
+          </p>
+        </motion.div>
 
         <motion.div 
-          variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center gap-6"
+          initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {/* Describe Your Problem Button -> Links to Contact */}
-          <Link to="/contact" onClick={scrollToTop}>
-            <motion.button 
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group flex items-center gap-3 bg-white text-black px-9 py-4 rounded-full font-bold text-sm tracking-wide shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_50px_rgba(255,255,255,0.6)] transition-all duration-500"
-            >
-              <Wrench className="w-4 h-4 text-zinc-800" />
-              Describe Your Problem
-            </motion.button>
-          </Link>
-
-          {/* See Our Work Button -> Links to The Work */}
-          <Link to="/the-work" onClick={scrollToTop}>
-            <motion.button 
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="group flex items-center gap-3 bg-zinc-900/50 backdrop-blur-md text-white border border-zinc-700 hover:border-zinc-400 hover:bg-zinc-800 px-9 py-4 rounded-full font-bold text-sm tracking-wide transition-all duration-500 shadow-lg"
-            >
-              See Our Work
-              <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-x-1.5 transition-all" />
-            </motion.button>
-          </Link>
+          {[
+            { icon: <Layers />, title: "When Something Needs to Be Built", img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80", desc: "A business process that no available product handles. A client-facing tool that needs to reflect how your operation actually works rather than forcing you to adapt to generic software." },
+            { icon: <Wrench />, title: "When Something Needs to Be Repaired", img: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=800&q=80", desc: "Software that was delivered and is technically running but not doing what it was supposed to. Systems that have slowed down to the point of frustrating everyone who uses them." },
+            { icon: <GitMerge />, title: "When Systems Need to Connect", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", desc: "Accounting software that does not talk to inventory. Customer data that lives in one place and billing data that lives in another. We build the connections." }
+          ].map((card, i) => (
+            <motion.div key={i} variants={fadeUpVariant} className="group bg-[#0a0a0a] border border-zinc-900 rounded-[2rem] overflow-hidden flex flex-col hover:border-zinc-700 transition-colors duration-500">
+              <div className="relative h-48 overflow-hidden">
+                <img src={card.img} alt={card.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+              </div>
+              <div className="p-8 pt-4 flex-1">
+                <div className="text-white mb-6">{card.icon}</div>
+                <h3 className="text-xl font-bold text-white mb-4">{card.title}</h3>
+                <p className="text-zinc-500 leading-relaxed text-sm">{card.desc}</p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
-      </motion.div>
-    </section>
+      </section>
+
+      {/* SECTION 2: WHY CLIENTS COME BACK */}
+      <section className="py-24 px-6 bg-[#020202] border-y border-zinc-900">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+            className="relative h-[500px] rounded-[2rem] overflow-hidden border border-zinc-900 hidden lg:block"
+          >
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1000&q=80" alt="Team" className="w-full h-full object-cover opacity-50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#020202] to-transparent" />
+          </motion.div>
+
+          <div>
+            <h2 className="text-xs font-bold tracking-[0.2em] text-zinc-600 uppercase mb-10">Why Clients Come Back</h2>
+            <div className="space-y-8">
+              {[
+                "We read the problem before we recommend the solution.",
+                "Every project has direct involvement from the people responsible for it.",
+                "We hand over documentation that actually explains what was built.",
+                "When something is not right after delivery, we deal with it."
+              ].map((text, i) => (
+                <motion.div key={i} variants={fadeUpVariant} className="flex items-start gap-4">
+                  <CheckCircle2 className="w-5 h-5 text-zinc-400 shrink-0 mt-0.5" />
+                  <p className="text-zinc-300 text-lg leading-relaxed font-medium">{text}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 3: BOTTOM CTA */}
+      <section className="py-32 px-6 relative flex justify-center bg-[#050505]">
+        <motion.div 
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUpVariant}
+          className="text-center max-w-3xl"
+        >
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-12 tracking-tighter leading-tight">
+            If your software is costing you more time or money than it should, that is worth a conversation.
+          </h2>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+            <Link to="/contact" onClick={scrollToTop}>
+              <button className="flex items-center gap-2 bg-white text-black px-10 py-5 rounded-full font-bold text-sm tracking-widest uppercase hover:bg-zinc-200 transition-all w-full sm:w-auto justify-center">
+                <Mail className="w-4 h-4" />
+                Write to Us
+              </button>
+            </Link>
+
+            <Link to="/contact" onClick={scrollToTop}>
+              <button className="flex items-center gap-2 bg-transparent border border-zinc-700 text-white hover:border-zinc-500 px-10 py-5 rounded-full font-bold text-sm tracking-widest uppercase transition-all w-full sm:w-auto justify-center">
+                <PhoneCall className="w-4 h-4" />
+                Book a Direct Call
+              </button>
+            </Link>
+          </div>
+        </motion.div>
+      </section>
+
+    </div>
   );
 };
 
-export default Hero;
+export default HomeSections;
